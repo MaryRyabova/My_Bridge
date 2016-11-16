@@ -112,6 +112,8 @@ namespace BridgGame
         int mSelectedCard = 0;
         size_t usedCard = 0;
         SetConsoleCursorPosition( hStdOut, { startX, startY } /*(currentCrd + 0)->rUpConer*/ );
+        int  initPos = ( currentCrd + 0 )->rUpConer.X -2; //для отрисовки колоды карт после выбора одной карты
+
 
         while ( 1 )
         {
@@ -135,58 +137,55 @@ namespace BridgGame
 
             iKey = _getch();
          
-                switch ( iKey )
+            switch ( iKey )
+            {
+            case LEFT:
+            {
+                if ( mSelectedCard > -1 )
                 {
-                case LEFT:
-                {
-                    if ( mSelectedCard > -1 )
+                    mSelectedCard--;
+                    if ( mSelectedCard == -1 )
                     {
-                        mSelectedCard--;
-                        if ( mSelectedCard == -1 )
-                        {
-                            mSelectedCard = 13 - 1;
-                        }
+                        mSelectedCard = 13 - 1;
                     }
-                    break;
                 }
+                break;
+            }
 
-                case RIGHT:
+            case RIGHT:
+            {
+                if ( mSelectedCard < 13 )
                 {
-                    if ( mSelectedCard < 13 )
+                    mSelectedCard++;
+                    if ( mSelectedCard == 13 )
                     {
-                        mSelectedCard++;
-                        if ( mSelectedCard == 13 )
-                        {
-                            mSelectedCard = 0;
-                        }
+                        mSelectedCard = 0;
                     }
-                    break;
                 }
-                case ENTER:
+                break;
+            }
+
+            case ENTER:
                 {
                     usedCard++;
-                    drawCard( centX, centY, ( currentCrd + mSelectedCard )->lear, ( currentCrd + mSelectedCard )->range );
+                    drawCard( centX, centY, ( currentCrd + mSelectedCard )->lear, ( currentCrd + mSelectedCard )->range ); //отрисовка выбраной карты
+
                     wipeDeck( startX, startY );
                     for ( int i = 0; i < 13 - usedCard; i++ )
                     {
                         if ( i != mSelectedCard )
                         {
-                            drawCard( ( currentCrd + mSelectedCard )->rUpConer.X, ( currentCrd + mSelectedCard )->rUpConer.Y - 1, ( currentCrd + mSelectedCard )->lear, ( currentCrd + mSelectedCard )->range );
+                            drawCard(initPos+2, ( currentCrd + i )->rUpConer.Y - 1, ( currentCrd + i )->lear, ( currentCrd + i )->range );
+                            initPos += 2;
+
                         }
                     }
-                    iKey = 0;
+                    
 
                     break;
-
                 }
-                default:
-                    break;
-                } 
 
-
-               
-
-            
+            } 
         }
 
        

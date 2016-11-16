@@ -72,29 +72,36 @@ int main()
     drawVerticalDeck( 60, 3 ); //for fourt pl
 
 
-    selectCard( infOne, 25, 14, 37, 10 );
+    //selectCard( infOne, 25, 14, 37, 10 );
+    switch ( seq )
+    {
+    case BridgGame::FIRST_PL:
+        {
+            selectCard( infOne, 25, 14, 35, 10 );
 
-    //switch ( seq )
-    //{
-    //case BridgGame::FIRST_PL:
-    //{
-    //    selectCard( infOne, 25, 14, 35, 10 );
-    //    seq++;
-    //}
-    //    break;
+            seq++;
+            break;
+        }
 
-    //case BridgGame::SECOND_PL:
-    //{
-    //    drawCard( 20, 5, infTwo[0].lear, infTwo[0].range );
-    //}
-    //    break;
-    //case BridgGame::THIRD_PL:
-    //    break;
-    //case BridgGame::FOURTH_PL:
-    //    break;
-    //default:
-    //    break;
-    //}
+    case BridgGame::SECOND_PL:
+        {
+            drawCard( 20, 7, infTwo[0].lear, infTwo[0].range );
+            seq++;
+            break;
+
+        }
+    case BridgGame::THIRD_PL:
+        {
+            selectCard( infThree, 25, 5, 35, 10 );
+            seq++;
+            break;
+        }
+    case BridgGame::FOURTH_PL:
+            drawCard( 40, 7, infFour[0].lear, infFour[0].range );
+        break;
+        default:
+            break;
+    }
 
 
 
